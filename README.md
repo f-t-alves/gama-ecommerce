@@ -22,7 +22,9 @@ https://ftalves-ecommerce.netlify.com
 
 ## Tecnologias
 
-Projeto NextJS utilizando Chakra-UI
+- [NextJS](https://nextjs.org/)
+- [Chakra-UI](https://chakra-ui.com/)
+- [react-phone-input-2](https://github.com/bl00mber/react-phone-input-2)
 
 ## Funcionalidades atuais
 

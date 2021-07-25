@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import Layout from "components/Layout";
-import OrderForm from "components/OrderForm";
+import OrderForm from "components/ClientForm";
 import productType from "types/productType";
 
 const Order: React.FC = () => {
