@@ -28,13 +28,11 @@ https://ftalves-ecommerce.netlify.com
 
 ## Funcionalidades atuais
 
-- Lista de produtos pré-cadastrados
+- Landing Page com acesso às funcionalidades
+- Lista de produtos com produtos pré-cadastrados
+- Formulário para registrar novos produtos
 - Adicionar produtos ao carrinho
+- Lista de clientes
+- Formulário para registrar novos clientes
 - Revisar carrinho
-- Página de checkout com cadastro de cliente
-
-## Funcionalidades a adicionar
-
-- Cadastrar novos produtos
-- Guardar lista de cliente
-- Utilizar lista de cliente no checkout
+- Registrar carrinho a um cliente
