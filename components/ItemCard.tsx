@@ -10,7 +10,8 @@ import {
   StatHelpText,
 } from "@chakra-ui/react";
 
-import productType from "types/productType";
+import { productType } from "utils/types";
+import { getCart } from "utils/getData";
 
 const ItemCard = ({ item }: { item: productType }) => {
   const { colorMode } = useColorMode();
@@ -23,20 +24,12 @@ const ItemCard = ({ item }: { item: productType }) => {
     cursor: "pointer",
   };
 
-  const getCart = () => {
-    const cartStorage = localStorage.getItem(`@cart`);
-    if (cartStorage) {
-      return JSON.parse(cartStorage);
-    }
-    return [];
-  }
-
   const addToCart = (item: productType) => {
     let cart: productType[] = getCart();
     cart = [...cart, item];
     localStorage.setItem(`@cart`, JSON.stringify(cart));
-    console.log("Click: ", item.id, cart)
-  }
+    console.log("Click: ", item.id, cart);
+  };
 
   return (
     <Box onClick={() => addToCart(item)}>
@@ -49,7 +42,7 @@ const ItemCard = ({ item }: { item: productType }) => {
         maxW="180px"
         padding="10px"
       >
-        <Image alt={item.name} src={item.image} width="95%" />
+        <Image alt={item.name} src={item.imageURL} width="95%" />
         <VStack align="stretch" p={4} spacing={2}>
           <Text fontSize="m" textAlign="left">
             {item.name}

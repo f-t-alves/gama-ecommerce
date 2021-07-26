@@ -38,9 +38,19 @@ const Header = () => {
       <Spacer />
 
       <HStack spacing={3}>
-        <NextLink href={"/cart"} passHref>
+      <NextLink href={"/shop"} passHref>
           <Button colorScheme="green" size="sm">
-            Cart
+            Shop
+          </Button>
+        </NextLink>
+        <NextLink href={"/clients"} passHref>
+          <Button colorScheme="green" size="sm">
+            Clients
+          </Button>
+        </NextLink>
+        <NextLink href={"/order"} passHref>
+          <Button colorScheme="green" size="sm">
+            Order
           </Button>
         </NextLink>
 

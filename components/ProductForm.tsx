@@ -22,16 +22,16 @@ import { IoCreateOutline } from "react-icons/io5";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-import { clientType } from "utils/types";
-import { getClients } from "utils/getData";
+import { productType } from "utils/types";
+import { getProducts } from "utils/getData";
 
-const ClientForm = () => {
+const ProductForm = () => {
   const bg = useColorModeValue("#fafafa", "#060606");
 
-  const [fullName, setFullName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [imageURL, setImageURL] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
   const { colorMode } = useColorMode();
 
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -40,19 +40,19 @@ const ClientForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    const clients = getClients();
-    const newID = clients.length + 1;
+    const products = getProducts();
+    const newID = products.length + 1;
 
-    const data: clientType = {
+    const data: productType = {
       id: newID,
-      name: fullName,
-      email,
-      address,
-      phone,
+      name,
+      description,
+      imageURL,
+      price,
     };
-    const convertData = JSON.stringify([...clients, data]);
+    const convertData = JSON.stringify([...products, data]);
 
-    localStorage.setItem("@clientList", convertData);
+    localStorage.setItem("@productList", convertData);
 
     setLoading(true);
 
@@ -62,7 +62,7 @@ const ClientForm = () => {
   };
 
   const renderLoading = (isLoaded: boolean) => {
-    if (isLoaded) return <Text>Client registered!</Text>;
+    if (isLoaded) return <Text>Product registered!</Text>;
     return <Spinner />;
   };
 
@@ -87,52 +87,54 @@ const ClientForm = () => {
         border={colorMode === "light" ? "1px solid #000" : "1px solid #fff"}
         bg={bg}
       >
-        <Heading justify="center">Register new client</Heading>
-        <FormControl id="fullName">
+        <Heading justify="center">Register new product</Heading>
+        <FormControl id="name">
           <FormLabel>Name</FormLabel>
           <Input
             autoComplete="name"
-            placeholder={"Nowhere Man"}
-            value={fullName}
-            onChange={({ currentTarget: { value } }) => setFullName(value)}
+            placeholder={"Product Name"}
+            value={name}
+            onChange={({ currentTarget: { value } }) => setName(value)}
             focusBorderColor="green.500"
             size="lg"
             isRequired
           />
         </FormControl>
-        <FormControl id="email">
-          <FormLabel>Email address</FormLabel>
+        <FormControl id="description">
+          <FormLabel>Description</FormLabel>
           <Input
-            autoComplete="email"
-            placeholder={"man@nowhere.com"}
-            value={email}
-            onChange={({ currentTarget: { value } }) => setEmail(value)}
+            autoComplete="description"
+            placeholder={"Product Description"}
+            value={description}
+            onChange={({ currentTarget: { value } }) => setDescription(value)}
             focusBorderColor="green.500"
             size="lg"
             isRequired
           />
           <FormHelperText>We will never share your email.</FormHelperText>
         </FormControl>
-        <FormControl id="address">
-          <FormLabel>Delivery address</FormLabel>
+        <FormControl id="imageURL">
+          <FormLabel>Product Image URL</FormLabel>
           <Input
-            autoComplete="street-address"
-            placeholder={"1234 Nowhere Street, Nowhere Land"}
-            value={address}
-            onChange={({ currentTarget: { value } }) => setAddress(value)}
+            autoComplete="url"
+            placeholder={"Product Image URL"}
+            value={imageURL}
+            onChange={({ currentTarget: { value } }) => setImageURL(value)}
             focusBorderColor="green.500"
             size="lg"
             isRequired
           />
         </FormControl>
-        <FormControl id="phone">
-          <FormLabel>Phone Number</FormLabel>
-          <PhoneInput
-            country={"us"}
-            preferredCountries={["br", "us"]}
-            placeholder="Enter phone number"
-            value={phone}
-            onChange={setPhone}
+        <FormControl id="price">
+          <FormLabel>Price</FormLabel>
+          <Input
+            autoComplete="price"
+            placeholder={"0.00"}
+            value={price}
+            onChange={({ currentTarget: { value } }) => setPrice(Number(value))}
+            focusBorderColor="green.500"
+            size="lg"
+            isRequired
           />
         </FormControl>
         <ButtonGroup variant="outline" spacing={6}>
@@ -150,4 +152,4 @@ const ClientForm = () => {
   );
 };
 
-export default ClientForm;
+export default ProductForm;
