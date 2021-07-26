@@ -18,6 +18,7 @@ export type orderType = {
     id: number,
     products: productType[],
     client: clientType,
+    total: number,
     orderDate: Date,
     status: string
 }

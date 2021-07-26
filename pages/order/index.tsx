@@ -16,7 +16,7 @@ import {
   Button,
   HStack,
   Icon,
-  Box,
+  VStack,
   FormControl,
 } from "@chakra-ui/react";
 
@@ -94,8 +94,8 @@ const Order: React.FC = () => {
     if (client) setChosenClient(client);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    console.log(`Registering order`)
 
     let orderList = getOrders();
     const newID: number = orderList.length + 1;
@@ -105,6 +105,7 @@ const Order: React.FC = () => {
       id: newID,
       products: cartItems,
       client: chosenClient,
+      total: total,
       orderDate: currentDate,
       status: 'Pending'
     }
@@ -158,7 +159,7 @@ const Order: React.FC = () => {
           </Tr>
         </Tfoot>
       </Table>
-      <Box onSubmit={handleSubmit}>
+      <VStack spacing={5}>
         <FormControl id='client'>
         <Select placeholder="Select client" onChange={handleSelect}>
           {clientList.map((client, key) => {
@@ -171,7 +172,7 @@ const Order: React.FC = () => {
         </Select>
         </FormControl>
         <HStack align="center">
-          <Button colorScheme="green" size="sm">
+          <Button colorScheme="green" onClick={() => handleSubmit()}>
             Submit Order
           </Button>
           <Button
@@ -181,7 +182,7 @@ const Order: React.FC = () => {
             Clear Cart
           </Button>
         </HStack>
-      </Box>
+      </VStack>
     </Layout>
   );
 };
