@@ -35,8 +35,8 @@ const Order: React.FC = () => {
     name: "",
     email: "",
     address: "",
-    phone: ""
-  } 
+    phone: "",
+  };
 
   const [cartItems, setCartItems] = useState<productType[]>(getCart());
   const [clientList, setClientList] = useState<clientType[]>(getClients());
@@ -46,9 +46,8 @@ const Order: React.FC = () => {
 
   const refreshCart = () => {
     const cartStorage: productType[] = getCart();
-    if (cartStorage.length) {
-      setCartItems(cartStorage);
-
+    setCartItems(cartStorage);
+    if (cartItems.length) {
       let sum: number = cartItems
         .map((a) => a.price)
         .reduce(function (a, b) {
@@ -60,11 +59,7 @@ const Order: React.FC = () => {
   };
 
   const refreshClientList = () => {
-    const clientStorage: clientType[] = getClients();
-
-    if (clientStorage.length) {
-      setClientList(clientStorage);
-    }
+    setClientList(getClients());
   };
 
   const clearCart = (alert: boolean) => {
@@ -90,12 +85,12 @@ const Order: React.FC = () => {
     e.preventDefault();
     const clientID: number = Number(e.target.value);
 
-    const client = clientList.find(i => i.id === clientID);
+    const client = clientList.find((i) => i.id === clientID);
     if (client) setChosenClient(client);
   };
 
   const handleSubmit = () => {
-    console.log(`Registering order`)
+    console.log(`Registering order`);
 
     let orderList = getOrders();
     const newID: number = orderList.length + 1;
@@ -107,11 +102,33 @@ const Order: React.FC = () => {
       client: chosenClient,
       total: total,
       orderDate: currentDate,
-      status: 'Pending'
-    }
+      status: "Pending",
+    };
 
-    orderList = [...orderList, data];
-    localStorage.setItem(`@orderList`, JSON.stringify(orderList));
+    if (chosenClient.id !== 0) {
+      orderList = [...orderList, data];
+      localStorage.setItem(`@orderList`, JSON.stringify(orderList));
+
+      toast({
+        title: "Order saved!",
+        status: "success",
+        isClosable: true,
+      });
+
+      setTimeout(() => {
+        clearCart(false);
+        toast.closeAll();
+      }, 1000);
+    } else {
+      toast({
+        title: "No client selected!",
+        status: "error",
+        isClosable: true,
+      });
+      setTimeout(() => {
+        toast.closeAll();
+      }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -160,16 +177,16 @@ const Order: React.FC = () => {
         </Tfoot>
       </Table>
       <VStack spacing={5}>
-        <FormControl id='client'>
-        <Select placeholder="Select client" onChange={handleSelect}>
-          {clientList.map((client, key) => {
-            return (
-              <option value={client.id} key={key}>
-                {client.name}
-              </option>
-            );
-          })}
-        </Select>
+        <FormControl id="client">
+          <Select placeholder="Select client" onChange={handleSelect}>
+            {clientList.map((client, key) => {
+              return (
+                <option value={client.id} key={key}>
+                  {client.name}
+                </option>
+              );
+            })}
+          </Select>
         </FormControl>
         <HStack align="center">
           <Button colorScheme="green" onClick={() => handleSubmit()}>
